@@ -1,13 +1,16 @@
-#Kairos Server & Database
+# Kairos Server & Database
 
 Developed by Derick Yearnsmith & Philippe Cantrel
 
-##Github
+## Github
+
 https://github.com/philthehuman/kairos-backend
 
-##Tech Stack
+## Tech Stack
+
 Express.js
 MongoDB
 
-##Database Diagram
+## Database Diagram
+
 [View Online](https://app.quickdatabasediagrams.com/#/d/NXOB4u)
