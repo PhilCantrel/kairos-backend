@@ -8,8 +8,8 @@ https://github.com/philthehuman/kairos-backend
 
 ## Tech Stack
 
-Express.js
-MongoDB
+- Express.js
+- MongoDB
 
 ## Database Diagram
 
