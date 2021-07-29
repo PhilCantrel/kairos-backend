@@ -4,43 +4,44 @@ const Schema = mongoose.Schema
 
 // Defines the Goal model/object
 const Goal = new Schema({
-    title = {
+    title: {
         type: String,
         required: true
     },
-    description = {
+    description: {
         type: String,
         required: true
     },
-    timeframe = {
+    timeframe: {
         type: String,
         required: true
     },
-    endDate ={
+    endDate: {
         type: String,
         required: true
     },
-    createdAt = {
+    createdAt: {
         type: Date,
         required: true
     },
-    lastEdited = {
+    lastEdited: {
         type: Date,
         required: true
     },
-    completedAt = {
+    completedAt: {
         type: Date,
         required: false
     },
-    lifetimeGoal = {
+    lifetimeGoal: {
         type: Array,
         required: true
     },
-    eventsId = {
+    eventsId: {
         type: Array,
         required: false
     }
 })
 
 // Expots the Goal object
-module.exports = mongoose.model('Goal', Goal)
+
+export default mongoose.model('Goal', Goal)

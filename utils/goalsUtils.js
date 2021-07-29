@@ -1,1 +1,0 @@
-import Goal from '../models/goals'

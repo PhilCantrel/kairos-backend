@@ -14,3 +14,5 @@ https://github.com/philthehuman/kairos-backend
 ## Database Diagram
 
 [View Online](https://app.quickdatabasediagrams.com/#/d/NXOB4u)
+
+![Kairos Database Diagram](./resources/Kairos%20Database%20Diagram.png)

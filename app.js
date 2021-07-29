@@ -3,6 +3,9 @@ import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
 
+// Imports the router
+import {router as appRouter} from './appRouter.mjs'
+
 // Defines port number
 const port = 4000
 
@@ -27,19 +30,16 @@ mongoose.connect(dbConn,
         useUnifiedTopology: true,
         useFindAndModify: false
     },
-    error => {
-        if (error){
-            console.log("Mongoose Database Connection Failed:", error)
+    err => {
+        if (err){
+            console.log("Mongoose database connection failed:", err)
         } else {
-            console.log("Successfully Connected to Mongoose Database")
+            console.log("Successfully connected to mongoose database")
         }
     })
 
-app.get('/', (req, res) => {
-    res.send('home')
-})
 
-
+app.use("/", appRouter)
 
 
 
