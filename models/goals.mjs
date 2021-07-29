@@ -17,14 +17,14 @@ const Goal = new Schema({
         required: true
     },
     endDate: {
-        type: String,
+        type: Date,
         required: true
     },
     createdAt: {
         type: Date,
         required: true
     },
-    lastEdited: {
+    editedAt: {
         type: Date,
         required: true
     },
@@ -32,9 +32,9 @@ const Goal = new Schema({
         type: Date,
         required: false
     },
-    lifetimeGoal: {
+    lTGoalId: {
         type: Array,
-        required: true
+        required: false
     },
     eventsId: {
         type: Array,
