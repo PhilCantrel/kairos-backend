@@ -1,4 +1,4 @@
-// Imports express library and getGoals controller function.
+// Imports express library and controller functions
 import express from 'express'
 import {getGoals, newGoal} from './controllers/goalsController.mjs'
 
