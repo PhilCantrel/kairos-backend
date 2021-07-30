@@ -3,34 +3,27 @@
 import mongoose from 'mongoose'
 import { MongoMemoryServer } from 'mongodb-memory-server'
 
-const mongoms = new MongoMemoryServer();
+const mongod = await MongoMemoryServer.create()
+
 
 // connect
-const connect = async () => {
-    const uri = mongoms.getUri()
+const dbConnect = async () => {
+    const uri = mongod.getUri()
     const mongooseOptions = {
         useNewUrlParser: true,
+        useCreateIndex: true,
         useUnifiedTopology: true,
-        poolSize: 10
+        useFindAndModify: false,
     }
     await mongoose.connect(uri, mongooseOptions)
 }
 
 // disconnect and close connections
-const disconnect = async () => {
+const dbDisconnect = async () => {
     await mongoose.connection.dropDatabase()
     await mongoose.connection.close()
-    await mongoms.stop()
-}
-
-// erase temporary database data
-const erase = async () => {
-    const collections = mongoose.connection.collections
-    for (const key in collections) {
-        const collection = collections[key]
-        await collection.deleteMany()
-    }
+    await mongod.stop()
 }
 
 // export functions
-export {connect, disconnect, erase}
+export {dbConnect, dbDisconnect}

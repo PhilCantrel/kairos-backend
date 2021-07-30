@@ -1,6 +1,8 @@
 // Imports mongoose and defines the mongoose Schema
 import mongoose from 'mongoose'
+import normalize from 'normalize-mongoose'
 const Schema = mongoose.Schema
+
 
 // Defines the Goal model/object
 const Goal = new Schema({
@@ -41,6 +43,8 @@ const Goal = new Schema({
         required: false
     }
 })
+
+Goal.plugin(normalize)
 
 // Expots the Goal object
 

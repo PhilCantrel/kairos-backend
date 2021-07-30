@@ -1,5 +1,6 @@
 // Imports utility functions
-import {getUserGoals, addUserGoal, getGoalById, updateGoal, deleteGoal} from '../utils/goalsUtils.mjs'
+import {getUserGoals, addUserGoal, getGoalById,
+        updateGoal, deleteGoal} from '../utils/goalsUtils.mjs'
 
 // DRY implementation of error handling
 const errorHandling = function(res, err, code) {

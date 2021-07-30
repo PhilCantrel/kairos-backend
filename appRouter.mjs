@@ -1,6 +1,7 @@
 // Imports express library and controller functions
 import express from 'express'
-import {getGoals, getGoal, newGoal, modifyGoal, removeGoal} from './controllers/goalsController.mjs'
+import {getGoals, getGoal, newGoal,
+        modifyGoal, removeGoal} from './controllers/goalsController.mjs'
 
 // Defines the express router
 const router = express.Router()
