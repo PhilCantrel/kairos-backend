@@ -8,22 +8,30 @@ const mongod = await MongoMemoryServer.create()
 
 // connect
 const dbConnect = async () => {
-    const uri = mongod.getUri()
-    const mongooseOptions = {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false,
+    try {
+        const uri = mongod.getUri()
+        const mongooseOptions = {
+            useNewUrlParser: true,
+            useCreateIndex: true,
+            useUnifiedTopology: true,
+            useFindAndModify: false,
+        }
+        await mongoose.connect(uri, mongooseOptions)
+    }catch (e) {
+        console.log(`dbConnection Error: ${e.message}`)
     }
-    await mongoose.connect(uri, mongooseOptions)
+}
+// drop database
+
+const dbDrop = async () => {
+    await mongoose.connection.dropDatabase()
 }
 
 // disconnect and close connections
 const dbDisconnect = async () => {
-    await mongoose.connection.dropDatabase()
     await mongoose.connection.close()
     await mongod.stop()
 }
 
 // export functions
-export {dbConnect, dbDisconnect}
+export {dbConnect, dbDisconnect, dbDrop}
