@@ -18,7 +18,21 @@ const getGoals = function (req, res) {
 // Sends one Goal (found by ID)
 const getGoal = function (req, res) {
     getGoalById(req.params.id).exec((err, goal) => {
-        err ? errorHandling(res, err, 404) : res.send(goal)
+        
+        if (err) {
+            errorHandling(res, err, 404) 
+            } else { 
+                try {
+                    if (goal) {
+                        res.send(goal)
+                    } else {
+                        res.status(404)
+                        return res.json("error: goal no longer exists")
+                    }
+                } catch (e) {
+                    console.log(e)
+                }
+            }
     })
 }
 

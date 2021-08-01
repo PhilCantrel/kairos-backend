@@ -78,7 +78,7 @@ describe("Test the goals path", () => {
                 }
             })
     })
-    test("Database should automatically create id, createdAt and editedAt", done => {
+    test("Database should automatically create id, createdAt and editedAt entries", done => {
         request(app)    
             .post('/goals')
             .send(sampleRequiredGoal)
@@ -95,7 +95,7 @@ describe("Test the goals path", () => {
             })
     })
 
-    test("Should be able to post optional fields as well as required and have them returned", done => {
+    test("Should be able to POST optional and required field and have them returned", done => {
         request(app)    
             .post('/goals')
             .send(sampleOptionalGoal)
@@ -149,17 +149,27 @@ describe("Test the goals path", () => {
 
     })
 
-    test("Should be able to delete goal entry with id with status 204 confirming deletion)", done => {
+    test("Should delete single goal (204 res) then GET /goals/[deleted goal id] should respond 404", done => {
         request(app)    
             .post('/goals')
             .send(sampleRequiredGoal)
             .expect(200)
             .then((res) => {
                 try {
+                    var resid = `${res.body.id}`
                     request(app)
-                        .delete(`/goals/${res.body.id}`)
+                        .delete(`/goals/${resid}`)
                         .expect(204)
-                        .end(done)
+                        .then((res) => {
+                            try {
+                                request(app)
+                                .get(`/goals/${resid}`)
+                                .expect(404)
+                                .end(done)
+                            } catch (e) {
+                                done(e)
+                            }
+                        })
                 } catch (e) {
                     done(e)
                 }
@@ -208,8 +218,5 @@ describe("Test the goals path", () => {
                     done(e)
                 }
             })
-
     })
-    
-
 })

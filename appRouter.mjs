@@ -17,6 +17,5 @@ router.post('/goals', newGoal)
 router.put('/goals/:id', modifyGoal)
 router.delete('/goals/:id', removeGoal)
 
-
 // Exports the router
 export {router}
