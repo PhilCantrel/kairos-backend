@@ -41,7 +41,7 @@ describe("Test the goals path", () => {
         "timeframe": ".2 ms",
         "endDate": sampleEndDate,
         "completedAt": sampleCompletedAt,
-        "lTGoalId": sampleLtGoalsId,
+        "lTGoalsId": sampleLtGoalsId,
         "eventsId": sampleEventsId
 
     }
@@ -103,7 +103,7 @@ describe("Test the goals path", () => {
             .then((res) => {
                 try {
                     expect(new Date(res.body.completedAt)).toStrictEqual(new Date(sampleCompletedAt))
-                    expect(res.body.lTGoalId).toStrictEqual(sampleLtGoalsId)
+                    expect(res.body.lTGoalsId).toStrictEqual(sampleLtGoalsId)
                     expect(res.body.eventsId).toStrictEqual(sampleEventsId)
                     done()
                 } catch (e) {

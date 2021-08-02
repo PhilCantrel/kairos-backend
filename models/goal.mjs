@@ -34,7 +34,7 @@ const Goal = new Schema({
         type: Date,
         required: false
     },
-    lTGoalId: {
+    lTGoalsId: {
         type: Array,
         required: false
     },
@@ -44,8 +44,9 @@ const Goal = new Schema({
     }
 })
 
+// Removes _ from id and deletes v property from model
 Goal.plugin(normalize)
 
-// Expots the Goal object
+// Exports the Goal model
 
 export default mongoose.model('Goal', Goal)

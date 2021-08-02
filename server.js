@@ -16,7 +16,8 @@ mongoose.connect(dbConn,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        useFindAndModify: false
+        useFindAndModify: false,
+        useCreateIndex: true
     },
     err => {
         if (err){

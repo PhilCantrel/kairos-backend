@@ -1,5 +1,7 @@
 // Import Goal model
-import Goal from '../models/goals.mjs'
+import Goal from '../models/goal.mjs'
+
+let date = Date.now()
 
 // Returns all goals in the database
 const getUserGoals = function () {
@@ -18,7 +20,6 @@ const getGoalById = function (id){
 // Adds Created and Edited date to the request body and returns it
 const addUserGoal = function (req){
     try {
-        let date = Date.now()
         req.body.createdAt = date
         req.body.editedAt = date
         return Goal(req.body)
@@ -40,7 +41,7 @@ const deleteGoal = function (id) {
 // Updates the Goal by ID and returns it
 const updateGoal = function (req) {
     try {
-        req.body.editedAt = Date.now()
+        req.body.editedAt = date
         return Goal.findByIdAndUpdate(req.params.id, req.body, {new: true})
     } catch (e) {
         console.log(`goalUtils => updateGoal Error: ${e.message}`)

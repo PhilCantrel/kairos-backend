@@ -9,14 +9,16 @@
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --runInBand --detectOpenHandles"
   },
   "jest": {
-      "testEnvironment": "node"
+    "testEnvironment": "node"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "jest": "^27.0.6",
+    "jsonwebtoken": "^8.5.1",
     "mongodb-memory-server": "^7.3.4",
     "mongoose": "^5.13.3",
     "normalize-mongoose": "^0.0.1",
