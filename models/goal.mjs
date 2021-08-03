@@ -34,6 +34,10 @@ const Goal = new Schema({
         type: Date,
         required: false
     },
+    userId: {
+        type: String,
+        required: true
+    },
     lTGoalsId: {
         type: Array,
         required: false

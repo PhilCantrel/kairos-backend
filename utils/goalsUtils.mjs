@@ -4,8 +4,8 @@ import Goal from '../models/goal.mjs'
 let date = Date.now()
 
 // Returns all goals in the database
-const getUserGoals = function () {
-    return Goal.find()
+const getUserGoals = function (req) {
+    return Goal.find({userId: req.user.id})
 }
 
 // Return Goal by ID
@@ -20,6 +20,7 @@ const getGoalById = function (id){
 // Adds Created and Edited date to the request body and returns it
 const addUserGoal = function (req){
     try {
+        req.body.userId = req.user.id
         req.body.createdAt = date
         req.body.editedAt = date
         return Goal(req.body)

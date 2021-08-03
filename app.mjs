@@ -1,6 +1,10 @@
 // Imports required libraries
 import express from 'express'
 import cors from 'cors'
+import jsonwebtoken from 'jsonwebtoken'
+import yenv from 'yenv'
+
+const env = yenv('env.yaml', { env: 'jwt' })
 
 // Imports the router
 import {router as appRouter} from './appRouter.mjs'
@@ -15,6 +19,24 @@ app.use(express.json())
 // Enables CORS (Cross-origin Resource Sharing) so requests can skip the Same-origin policy
 // (https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)
 app.use(cors())
+
+
+// Verify JWT token 
+app.use((req,res,next) => {
+    if (req.headers.authorization) {
+        jsonwebtoken.verify(req.headers.authorization.split(' ')[1], env.JWT_SECRET, (err, decoded) => {
+            if (err) {
+                req.user = undefined
+            } else {
+                req.user = decoded
+            }
+            next()
+        })
+    } else {
+        req.user = undefined
+        next()
+    }
+})
 
 
 // Uses all routing specified in appRouter.js

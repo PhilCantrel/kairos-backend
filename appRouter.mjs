@@ -2,7 +2,7 @@
 import express from 'express'
 import {getGoals, getGoal, newGoal,
         modifyGoal, removeGoal} from './controllers/goalsController.mjs'
-import {signUp} from './controllers/authController.mjs'
+import {signUp, signIn, loginCheck} from './controllers/authController.mjs'
 
 // Defines the express router
 const router = express.Router()
@@ -15,6 +15,10 @@ router.get('/', (req, res) => {
 
 // Auth/User routes
 router.post('/sign_up', signUp)
+router.post('/sign_in', signIn)
+
+// required login for all routes under this line
+router.use(loginCheck)
 
 // CRUD routes for goals
 router.get('/goals', getGoals)

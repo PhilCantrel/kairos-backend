@@ -5,10 +5,28 @@ import {dbConnect, dbDisconnect, dbDrop} from './mmsdb.mjs'
 
 // theQuestion = toBe || !toBe; – Coco Apr 2 '19 at 15:15 
 
+let loggedInToken = ''
+
+
 // Handles database connection, erasure and disconnection
 beforeAll(async () => await dbConnect())
 afterEach(async () => await dbDrop())
 afterAll(async () => await dbDisconnect())
+
+// Generates fresh user and JWT for each test
+beforeEach((done)=>{
+    request(app)
+    .post('/sign_up')
+    .send({
+      email: 'test@test.com',
+      password: 'test123'
+    })
+    .end((err, response)=>{
+      loggedInToken = response.body.jwt;
+      done()
+    })
+})
+
 
 describe("Test the root path", () => {
     test("There should be a response to the GET method", done => {
@@ -51,12 +69,14 @@ describe("Test the goals path", () => {
     test("There should be a response (200 Status) to the GET method", done => {
         request(app)
             .get('/goals')
+            .set('Authorization', 'bearer ' + loggedInToken)
             .expect(200)
             .end(done)
     })
     test("A POST request without all required fields should be rejected with status 500", done => {
         request(app)
             .post('/goals')
+            .set('Authorization', 'bearer ' + loggedInToken)
             .send({})
             .expect(500)
             .end(done)
@@ -64,6 +84,7 @@ describe("Test the goals path", () => {
     test("A POST request w/ all required fields should respond with status 200 and return title, description, timeframe & endDate", done => {
         request(app)    
             .post('/goals')
+            .set('Authorization', 'bearer ' + loggedInToken)
             .send(sampleRequiredGoal)
             .expect(200)
             .then((res) => {
@@ -81,6 +102,7 @@ describe("Test the goals path", () => {
     test("Database should automatically create id, createdAt and editedAt entries", done => {
         request(app)    
             .post('/goals')
+            .set('Authorization', 'bearer ' + loggedInToken)
             .send(sampleRequiredGoal)
             .expect(200)
             .then((res) => {
@@ -98,6 +120,7 @@ describe("Test the goals path", () => {
     test("Should be able to POST optional and required field and have them returned", done => {
         request(app)    
             .post('/goals')
+            .set('Authorization', 'bearer ' + loggedInToken)
             .send(sampleOptionalGoal)
             .expect(200)
             .then((res) => {
@@ -115,12 +138,14 @@ describe("Test the goals path", () => {
     test("Should be able to GET request /goals/:id, receive 200 status & json data", done => {
         request(app)    
             .post('/goals')
+            .set('Authorization', 'bearer ' + loggedInToken)
             .send(sampleRequiredGoal)
             .expect(200)
             .then((res) => {
                 try {
                     request(app)
                         .get(`/goals/${res.body.id}`)
+                        .set('Authorization', 'bearer ' + loggedInToken)
                         .expect(200)
                         .expect('Content-Type', /json/)
                         .end(done)
@@ -134,12 +159,14 @@ describe("Test the goals path", () => {
     test("Invalid goal id should respond with 404 status", done => {
         request(app)    
             .post('/goals')
+            .set('Authorization', 'bearer ' + loggedInToken)
             .send(sampleRequiredGoal)
             .expect(200)
             .then((res) => {
                 try {
                     request(app)
                         .get(`/goals/1`)
+                        .set('Authorization', 'bearer ' + loggedInToken)
                         .expect(404)
                         .end(done)
                 } catch (e) {
@@ -152,6 +179,7 @@ describe("Test the goals path", () => {
     test("Should delete single goal (204 res) then GET /goals/[deleted goal id] should respond 404", done => {
         request(app)    
             .post('/goals')
+            .set('Authorization', 'bearer ' + loggedInToken)
             .send(sampleRequiredGoal)
             .expect(200)
             .then((res) => {
@@ -159,11 +187,13 @@ describe("Test the goals path", () => {
                     var resid = `${res.body.id}`
                     request(app)
                         .delete(`/goals/${resid}`)
+                        .set('Authorization', 'bearer ' + loggedInToken)
                         .expect(204)
                         .then((res) => {
                             try {
                                 request(app)
                                 .get(`/goals/${resid}`)
+                                .set('Authorization', 'bearer ' + loggedInToken)
                                 .expect(404)
                                 .end(done)
                             } catch (e) {
@@ -180,12 +210,14 @@ describe("Test the goals path", () => {
     test("Should get 404 when trying to delete goal with invalid id", done => {
         request(app)    
             .post('/goals')
+            .set('Authorization', 'bearer ' + loggedInToken)
             .send(sampleRequiredGoal)
             .expect(200)
             .then((res) => {
                 try {
                     request(app)
                         .delete(`/goals/${res.body.id}`)
+                        .set('Authorization', 'bearer ' + loggedInToken)
                         .expect(204)
                         .end(done)
                 } catch (e) {
@@ -198,12 +230,14 @@ describe("Test the goals path", () => {
     test("PUT request to goals/:id should update existing goal", done => {
         request(app)    
             .post('/goals')
+            .set('Authorization', 'bearer ' + loggedInToken)
             .send(sampleRequiredGoal)
             .expect(200)
             .then((res) => {
                 try {
                     request(app)
                         .put(`/goals/${res.body.id}`)
+                        .set('Authorization', 'bearer ' + loggedInToken)
                         .send({title: "The Title Should Now Be Updated"})
                         .expect(200)
                         .then((res) => {

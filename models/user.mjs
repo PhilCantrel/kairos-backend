@@ -23,18 +23,6 @@ const User = new Schema({
         type: Date,
         required: true,
     },
-    lTGoalsId: {
-        type: Array,
-        required: false
-    },
-    goalsId: {
-        type: Array,
-        required: false
-    },
-    habitsId: {
-        type: Array,
-        required: false
-    },
     avatar : {
         type: Number,
         required: true
@@ -42,6 +30,10 @@ const User = new Schema({
 
 
 })
+
+User.methods.comparePassword = function(password) {
+    return bcrypt.compareSync(password, this.hashed_password)
+}
 
 // Removes _ from id and deletes v property from model
 User.plugin(normalize)
