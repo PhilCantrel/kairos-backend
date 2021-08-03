@@ -12,19 +12,25 @@ const errorHandling = function(res, err, code) {
 
 
 const signUp = function (req, res) {
-    const newUser = new User(req.body)
-    newUser.hashed_password = bcrypt.hashSync(req.body.password, 10)
-    newUser.createdAt = Date.now()
-    newUser.editedAt = Date.now()
-    newUser.avatar = 1
-    newUser.save((err, user) => {
-        if (err) {
-            res.status(400)
-            return res.json({error: err.message})
-        }
-        // return the email & jwt
-        return res.json({jwt: jsonwebtoken.sign({email: user.email, id: user.id}, env.JWT_SECRET, { expiresIn: env.JWT_EXPIRES_IN })})
-    })
+    if (req.body.password) {
+        const newUser = new User(req.body)
+        newUser.hashed_password = bcrypt.hashSync(req.body.password, 10)
+        newUser.createdAt = Date.now()
+        newUser.editedAt = Date.now()
+        newUser.avatar = 1
+        newUser.save((err, user) => {
+            if (err) {
+                res.status(400)
+                return res.json({error: err.message})
+            }
+            // return the email & jwt
+            res.status(201)
+            return res.json({jwt: jsonwebtoken.sign({email: user.email, id: user.id}, env.JWT_SECRET, { expiresIn: env.JWT_EXPIRES_IN })})
+        })
+    } else {
+        res.status(400)
+        return res.json({error: 'Account Creation Failed: Password field required'})
+    }
 }
 
 const signIn = function (req, res) {
@@ -32,8 +38,9 @@ const signIn = function (req, res) {
         if (err) {errorHandling(res, err, 400)}
         if (!user || !user.comparePassword(req.body.password)) {
             res.status(400)
-            return res.json({message: "Authentication Failed, Invalid email or password"}) 
+            return res.json({message: "Authentication Failed: Invalid email or password"}) 
         }
+        res.status(200)
         return res.json({jwt: jsonwebtoken.sign({email: user.email, id: user.id}, env.JWT_SECRET, { expiresIn: env.JWT_EXPIRES_IN })})
     })
 }
@@ -42,7 +49,7 @@ const loginCheck = function (req, res, next) {
     if(req.user) {
         next()
     } else {
-        return res.status(401).json({message: "Authorisation Failed, No or Invalid User"})
+        return res.status(401).json({message: "Authorisation Failed: No or invalid user"})
     }
 }
 

@@ -8,11 +8,6 @@ import {signUp, signIn, loginCheck} from './controllers/authController.mjs'
 const router = express.Router()
 
 
-// Home route
-router.get('/', (req, res) => {
-    res.send('home')
-})
-
 // Auth/User routes
 router.post('/sign_up', signUp)
 router.post('/sign_in', signIn)

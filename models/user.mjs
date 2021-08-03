@@ -31,6 +31,8 @@ const User = new Schema({
 
 })
 
+
+// Compare submitted password with stored has password
 User.methods.comparePassword = function(password) {
     return bcrypt.compareSync(password, this.hashed_password)
 }

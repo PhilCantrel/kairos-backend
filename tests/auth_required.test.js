@@ -1,11 +1,11 @@
+// JEST tests for all tests that require authentication
+
 import request from 'supertest'
 import {app} from '../app.mjs'
 
 import {dbConnect, dbDisconnect, dbDrop} from './mmsdb.mjs'
 
 // theQuestion = toBe || !toBe; – Coco Apr 2 '19 at 15:15 
-
-let loggedInToken = ''
 
 
 // Handles database connection, erasure and disconnection
@@ -14,29 +14,22 @@ afterEach(async () => await dbDrop())
 afterAll(async () => await dbDisconnect())
 
 // Generates fresh user and JWT for each test
+let loggedInToken = ''
+
 beforeEach((done)=>{
     request(app)
-    .post('/sign_up')
-    .send({
-      email: 'test@test.com',
-      password: 'test123'
-    })
-    .end((err, response)=>{
-      loggedInToken = response.body.jwt;
-      done()
-    })
+        .post('/sign_up')
+        .send({
+        email: 'test@test.com',
+        password: 'test123'
+        })
+        .end((err, res)=>{
+        loggedInToken = res.body.jwt
+        done()
+        })
 })
 
-
-describe("Test the root path", () => {
-    test("There should be a response to the GET method", done => {
-        request(app)
-            .get('/')
-            .expect(200)
-            .end(done)
-    })
-})
-
+// All goals related testing
 describe("Test the goals path", () => {
 
     // defines the test goals data
@@ -243,6 +236,7 @@ describe("Test the goals path", () => {
                         .then((res) => {
                             try {
                                 expect(res.body.title).toBe("The Title Should Now Be Updated")
+                                expect(res.body.description).toBe("Test description")
                                 done()
                             } catch (e) {
                                 done(e)
