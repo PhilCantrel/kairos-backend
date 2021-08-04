@@ -36,7 +36,7 @@ const getGoal = function (req, res) {
     })
 }
 
-// Updates ones goal (foudn by ID) and sends updated goal
+// Updates ones goal (found by ID) and sends updated goal
 const modifyGoal = function (req, res) {
     updateGoal(req).exec((err, goal) => {
         err ? errorHandling(res, err, 404) : res.send(goal), res.status(200)
