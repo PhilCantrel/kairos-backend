@@ -1,19 +1,19 @@
 // Import LifeTimeGoal model
-import LifeTimeGoal from '../models/lifeTimeGoal.mjs'
+import LifetimeGoal from '../models/lifetimeGoal.mjs'
 
 let date = Date.now()
 
 // Returns all life time goals in the database
 const getUserLTGoals = function (req) {
-    return LifeTimeGoal.find({userId: req.user.id})
+    return LifetimeGoal.find({userId: req.user.id})
 }
 
 // Return life tiem goal by ID
 const getLTGoalById = function (id){
     try {
-        return LifeTimeGoal.findById(id)
+        return LifetimeGoal.findById(id)
     } catch (e) {
-        console.log(`lifeTimeGoalUtils => getLTGoalById Error: ${e.message}`)
+        console.log(`lifetimeGoalUtils => getLTGoalById Error: ${e.message}`)
     }
 }
 
@@ -23,9 +23,9 @@ const addUserLTGoal = function (req){
         req.body.userId = req.user.id
         req.body.createdAt = date
         req.body.editedAt = date
-        return LifeTimeGoal(req.body)
+        return LifetimeGoal(req.body)
     } catch (e) {
-        console.log(`lifeTimeGoalUtils => addUserLTGoal Error: ${e.message}`)
+        console.log(`lifetimeGoalUtils => addUserLTGoal Error: ${e.message}`)
     }
     
 }
@@ -33,9 +33,9 @@ const addUserLTGoal = function (req){
 // Deletes life time goal from the database by ID
 const deleteLTGoal = function (id) {
     try {
-        return LifeTimeGoal.findByIdAndRemove(id)
+        return LifetimeGoal.findByIdAndRemove(id)
     } catch (e) {
-        console.log(`lifeTimeGoalUtils => deleteLTGoal Error: ${e.message}`)
+        console.log(`lifetimeGoalUtils => deleteLTGoal Error: ${e.message}`)
     }
 }
 
@@ -43,13 +43,13 @@ const deleteLTGoal = function (id) {
 const updateLTGoal = function (req) {
     try {
         req.body.editedAt = date
-        return LifeTimeGoal.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        return LifetimeGoal.findByIdAndUpdate(req.params.id, req.body, {new: true})
     } catch (e) {
-        console.log(`lifeTimeGoalUtils => updateLTGoal Error: ${e.message}`)
+        console.log(`lifetimeGoalUtils => updateLTGoal Error: ${e.message}`)
     }
 }
 
 
 
-// exports LifeTimeGoals utility functions
+// exports LifetimeGoals utility functions
 export {getUserLTGoals, addUserLTGoal, getLTGoalById, updateLTGoal, deleteLTGoal}

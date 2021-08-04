@@ -3,7 +3,7 @@ import express from 'express'
 import {getGoals, getGoal, newGoal,
         modifyGoal, removeGoal} from './controllers/goalsController.mjs'
 import {getLTGoals, getLTGoal, newLTGoal,
-        modifyLTGoal, removeLTGoal} from './controllers/lifeTimeGoalsController.mjs'
+        modifyLTGoal, removeLTGoal} from './controllers/lifetimeGoalsController.mjs'
 import {signUp, signIn, loginCheck} from './controllers/authController.mjs'
 
 // Defines the express router

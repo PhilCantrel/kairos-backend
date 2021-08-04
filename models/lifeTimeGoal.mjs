@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 
 
 // Defines the Goal model/object
-const LifeTimeGoal = new Schema({
+const LifetimeGoal = new Schema({
     type: {
         type: String,
         required: true
@@ -29,8 +29,8 @@ const LifeTimeGoal = new Schema({
 })
 
 // Removes _ from id and deletes v property from model
-LifeTimeGoal.plugin(normalize)
+LifetimeGoal.plugin(normalize)
 
 // Exports the Goal model
 
-export default mongoose.model('LifeTimeGoal', LifeTimeGoal)
+export default mongoose.model('LifetimeGoal', LifetimeGoal)

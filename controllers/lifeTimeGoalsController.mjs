@@ -1,6 +1,6 @@
 // Imports utility functions
 import {getUserLTGoals, addUserLTGoal, getLTGoalById,
-        updateLTGoal, deleteLTGoal} from '../utils/lifeTimeGoalsUtils.mjs'
+        updateLTGoal, deleteLTGoal} from '../utils/lifetimeGoalsUtils.mjs'
 
 // DRY implementation of error handling
 const errorHandling = function(res, err, code) {
