@@ -5,6 +5,8 @@ import {getGoals, getGoal, newGoal,
 import {getLTGoals, getLTGoal, newLTGoal,
         modifyLTGoal, removeLTGoal} from './controllers/lifetimeGoalsController.mjs'
 import {signUp, signIn, loginCheck} from './controllers/authController.mjs'
+import {getEvents, newEvent, getEvent,
+        removeEvent, modifyEvent, getEventsByGoal} from './controllers/eventController.mjs'
 
 // Defines the express router
 const router = express.Router()
@@ -30,6 +32,13 @@ router.get('/goals/:id', getGoal)
 router.post('/goals', newGoal)
 router.put('/goals/:id', modifyGoal)
 router.delete('/goals/:id', removeGoal)
+
+// CRUD routes for events
+router.get('/events', getEvents)
+router.get('/events/:id', getEvent)
+router.post('/events', newEvent)
+router.put('/events/:id', modifyEvent)
+router.delete('/events/:id', removeEvent)
 
 // Exports the router
 export {router}
