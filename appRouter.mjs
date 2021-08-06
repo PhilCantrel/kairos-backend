@@ -7,6 +7,8 @@ import {getLTGoals, getLTGoal, newLTGoal,
 import {signUp, signIn, loginCheck} from './controllers/authController.mjs'
 import {getEvents, newEvent, getEvent,
         removeEvent, modifyEvent, getEventsByGoal} from './controllers/eventController.mjs'
+import { getHabits, newHabit, getHabit,
+         removeHabit, modifyHabit } from './controllers/habitController.mjs'
 
 // Defines the express router
 const router = express.Router()
@@ -39,6 +41,14 @@ router.get('/events/:id', getEvent)
 router.post('/events', newEvent)
 router.put('/events/:id', modifyEvent)
 router.delete('/events/:id', removeEvent)
+
+
+//CRUD for habits
+router.get('/habits/', getHabits)
+router.get('/habits/:id', getHabit)
+router.post('/habits', newHabit)
+router.delete('/habits/:id', removeHabit)
+router.put('/habits/:id', modifyHabit)
 
 // Exports the router
 export {router}

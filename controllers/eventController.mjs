@@ -15,19 +15,19 @@ const newEvent = function (req, res){
             if(err){
                 errorHandling(res, err, 500)
             }else{
-                console.log("event.id:",event.id)
-                console.log("goalsId:", event.goalsId)
+                // console.log("event.id:",event.id)
+                // console.log("goalsId:", event.goalsId)
                 
                 event.goalsId.forEach(g => {
-                    console.log('current event.goalsId instance',g)
+                    // console.log('current event.goalsId instance',g)
                     Goal.findByIdAndUpdate(
                         g,
                         {$push: {eventsId: event.id} },
                         )
-                    console.log('new event.goalsId:',g.eventsId)
+                    // console.log('new event.goalsId:',g.eventsId)
                   })
 
-                console.log(event)
+                // console.log(event)
             }
             res.send(event)
     })
