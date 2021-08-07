@@ -6,7 +6,7 @@ import {getLTGoals, getLTGoal, newLTGoal,
         modifyLTGoal, removeLTGoal} from './controllers/lifetimeGoalsController.mjs'
 import {signUp, signIn, loginCheck} from './controllers/authController.mjs'
 import {getEvents, newEvent, getEvent,
-        removeEvent, modifyEvent, getEventsByGoal} from './controllers/eventController.mjs'
+        removeEvent, modifyEvent, getEventByDay} from './controllers/eventController.mjs'
 import { getHabits, newHabit, getHabit,
          removeHabit, modifyHabit } from './controllers/habitController.mjs'
 
@@ -37,6 +37,7 @@ router.delete('/goals/:id', removeGoal)
 
 // CRUD routes for events
 router.get('/events', getEvents)
+router.get('/events/getday/:data', getEventByDay)
 router.get('/events/:id', getEvent)
 router.post('/events', newEvent)
 router.put('/events/:id', modifyEvent)

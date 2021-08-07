@@ -1,4 +1,6 @@
 import Goal from '../models/goal.mjs'
+import Event from '../models/event.mjs'
+import moment from 'moment'
 import { getUserEvents, getGoalEvents, getEventById, updateEvent, deleteEvent, addUserEvent } from '../utils/eventUtils.mjs'
 
 const errorHandling = function(res, err, code) {
@@ -41,6 +43,7 @@ const getEvents = function(req, res){
 }
 // Read single event
 const getEvent = function(req,res) {
+    console.log(req.body)
     getEventById(req.params.id)
         .populate('goalsId')
         .exec((err, event) => {
@@ -75,10 +78,20 @@ const removeEvent = function(req, res){
     })
 }
 
-// // Get event by Day ?
-// const getEventsByDay = function(req, res){
-//     getEventByDay
-// }
+// Get event by Day ?
+const getEventByDay = function(req, res){
+    let date = moment(req.params.data).toISOString()
+    let date2 = moment(req.params.data).add(1, 'day').toISOString()
+    console.log(date, date2)
+    Event.find({ 
+        eventStart : { 
+          $gt: new Date(date), 
+          $lt: new Date(date2)
+        } 
+       }).exec((err, events) => {
+            err ? errorHandling(res, err, 404) : res.send(events)
+       })
+}
 
 // Possible endpoint. But maybe not needed.
 const getEventsByGoal = function(req,res){
@@ -88,4 +101,4 @@ const getEventsByGoal = function(req,res){
 }
 
 // export controller for use in router
-export {getEvents, getEvent, modifyEvent, removeEvent, newEvent, getEventsByGoal}
+export {getEvents, getEvent, modifyEvent, removeEvent, newEvent, getEventsByGoal, getEventByDay}

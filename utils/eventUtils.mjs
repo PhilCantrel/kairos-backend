@@ -34,6 +34,7 @@ const deleteEvent = function(id){
     }
 }
 
+
 const updateEvent = function(req){
     try{
         req.body.editedAt = Date.now()
@@ -42,16 +43,6 @@ const updateEvent = function(req){
         console.log(`eventUtils => updateEvent Error: ${e.message}`)
     }
 }
-
-//find event by Day...
-// const getEventByDay = function(req){
-//     try{
-//         const userEvents = getUserEvents(req.user.id)
-//         return req
-//     }catch (e){
-//     console.log(`eventUtils => getEventByDay Error: ${e.message}`)
-//     }
-// }
 
 // not even sure this is needed, tbh... but I made it.
 const getGoalEvents = function(id){
@@ -62,4 +53,4 @@ const getGoalEvents = function(id){
     }
 }
 
-export { getUserEvents, GetGoalEvents, addUserEvent, getEventById, getGoalEvents, deleteEvent, updateEvent }
+export { getUserEvents, GetGoalEvents, addUserEvent, getEventById, getGoalEvents, deleteEvent, updateEvent}
