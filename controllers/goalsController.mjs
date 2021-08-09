@@ -1,17 +1,20 @@
 // Imports utility functions
+import Goal from '../models/goal.mjs'
 import {getUserGoals, addUserGoal, getGoalById,
         updateGoal, deleteGoal} from '../utils/goalsUtils.mjs'
 
 // DRY implementation of error handling
 const errorHandling = function(res, err, code) {
     res.status(code)
-    return res.json({error: err.message})
+    console.error(err)
+    return res.json(err)
 }
 
 // Sends all goals currently in the database
 const getGoals = function (req, res) {
-    getUserGoals(req).exec((err, goals) => {
+    getUserGoals(req, (err, goals) => {
         err ? errorHandling(res, err, 500) : res.send(goals)
+
     })
 }
 
@@ -51,11 +54,18 @@ const removeGoal = function (req, res) {
     })
 }
 
-// Saves new goal to database and displays it
+// Saves new goal to database and displays it.
+// Changed to using a promise, because I couldn't get the callback to populate
 const newGoal = function (req, res) {
-    addUserGoal(req).save((err, goal) => {
-        err ? errorHandling(res, err, 500) : res.send(goal)
-    })
+    // https://dev.to/paras594/how-to-use-populate-in-mongoose-node-js-mo0
+    addUserGoal(req).save()
+        .then( goal =>{
+            Goal
+                .populate(goal,{path: 'lTGoalsId', select: {type: 1}})
+                .then( g =>
+                res.send(g))
+        })
+        .catch(err => errorHandling(res, err, 500))
 }
 
 // Exports controller functions for use in router

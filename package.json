@@ -21,6 +21,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb-memory-server": "^7.3.4",
     "mongoose": "^5.13.3",
+    "mongoose-autopopulate": "^0.14.0",
     "normalize-mongoose": "^0.0.1",
     "superagent": "^6.1.0",
     "supertest": "^6.1.4",

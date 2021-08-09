@@ -8,27 +8,29 @@ const Schema = mongoose.Schema
 const Goal = new Schema({
     title: {
         type: String,
-        required: true
+        required: [true, 'title is required']
     },
     description: {
         type: String,
-        required: true
+        required: [true, 'description is missing']
     },
     timeframe: {
         type: String,
-        required: true
+        required: [true, 'no timeframe specified']
     },
     endDate: {
         type: Date,
-        required: true
+        required: [true, 'must have an end date']
     },
     createdAt: {
         type: Date,
-        required: true
+        default: Date.now(),
+        required: [true, 'createdAt was not created']
     },
     editedAt: {
         type: Date,
-        required: true
+        default: Date.now(),
+        required: [true, 'editedAt was not created']
     },
     completedAt: {
         type: Date,
@@ -36,17 +38,20 @@ const Goal = new Schema({
     },
     userId: {
         type: String,
+        required: [true, 'userId not added to goal']
+    },
+    lTGoalsId: [{
+        type: Schema.Types.ObjectId,
+        ref: "LifetimeGoal",
+        autopopulate: { select: 'type' },
         required: true
-    },
-    lTGoalsId: {
-        type: Array,
-        required: false
-    },
+    }],
     eventsId: {
         type: Array,
         required: false
     }
 })
+
 
 // Removes _ from id and deletes v property from model
 Goal.plugin(normalize)
