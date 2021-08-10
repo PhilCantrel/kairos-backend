@@ -82,8 +82,8 @@ const removeEvent = function(req, res){
 const getEventByDay = function(req, res){
     let date = moment(req.params.data).toISOString()
     let date2 = moment(req.params.data).add(1, 'day').toISOString()
-    console.log(date, date2)
-    Event.find({ 
+    Event.find({
+        userId: req.user.id,
         eventStart : { 
           $gt: new Date(date), 
           $lt: new Date(date2)
