@@ -25,6 +25,10 @@ const LifetimeGoal = new Schema({
     userId: {
         type: String,
         required: true
+    },
+    goalsId: {
+        type: Array,
+        default: []
     }
 })
 
