@@ -20,25 +20,6 @@ const newEvent = function (req, res){
         .catch(err => errorHandling(res, err, 500))
 }
 
-// .save((err, event) => {
-//     if(err){
-//         errorHandling(res, err, 500)
-//     }else{
-//         // console.log("event.id:",event.id)
-//         // console.log("goalsId:", event.goalsId)
-        
-//         event.goalsId.forEach(g => {
-//             // console.log('current event.goalsId instance',g)
-//             Goal.findByIdAndUpdate(
-//                 g,
-//                 {$push: {eventsId: event.id} },
-//                 )
-//             // console.log('new event.goalsId:',g.eventsId)
-//           })
-
-//         // console.log(event)
-//     }
-//     res.send(event)
 // Read all events
 const getEvents = function(req, res){
     getUserEvents(req).exec((err, events) =>{
@@ -47,7 +28,6 @@ const getEvents = function(req, res){
 }
 // Read single event
 const getEvent = function(req,res) {
-    console.log(req.body)
     getEventById(req.params.id)
         .populate('goalsId')
         .exec((err, event) => {

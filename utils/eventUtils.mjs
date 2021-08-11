@@ -38,7 +38,7 @@ const deleteEvent = function(id){
 const updateEvent = function(req){
     try{
         req.body.editedAt = Date.now()
-        return Event.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        return Event.findByIdAndUpdate(req.params.id, req.body)
     }catch(e){
         console.log(`eventUtils => updateEvent Error: ${e.message}`)
     }
