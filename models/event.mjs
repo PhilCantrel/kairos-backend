@@ -2,6 +2,7 @@
 import mongoose from 'mongoose'
 import normalize from 'normalize-mongoose'
 const Schema = mongoose.Schema
+import autopopulate from 'mongoose-autopopulate'
 
 // Event Definition:
 const Event = new Schema({
@@ -57,8 +58,13 @@ const Event = new Schema({
     },
     goalsId: [{
         type: Schema.Types.ObjectId,
-        ref: 'Goal'
+        ref: 'Goal',
+        autopopulate: { select: 'title' }
     }]
+})
+
+Event.plugin(autopopulate, {
+    functions: ['find', 'findOne', 'findById']
 })
 
 Event.plugin(normalize)

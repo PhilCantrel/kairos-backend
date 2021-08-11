@@ -12,29 +12,33 @@ const errorHandling = function(res, err, code) {
 
 // Create new event to database and display it
 const newEvent = function (req, res){
-    addUserEvent(req)
-        .save((err, event) => {
-            if(err){
-                errorHandling(res, err, 500)
-            }else{
-                // console.log("event.id:",event.id)
-                // console.log("goalsId:", event.goalsId)
-                
-                event.goalsId.forEach(g => {
-                    // console.log('current event.goalsId instance',g)
-                    Goal.findByIdAndUpdate(
-                        g,
-                        {$push: {eventsId: event.id} },
-                        )
-                    // console.log('new event.goalsId:',g.eventsId)
-                  })
-
-                // console.log(event)
-            }
-            res.send(event)
-    })
+    addUserEvent(req).save()
+        .then(newEvent => {
+            Event.populate(newEvent,{path:'goalsId', select:{title:1}})
+            .then(nE => res.send(nE))
+        })
+        .catch(err => errorHandling(res, err, 500))
 }
 
+// .save((err, event) => {
+//     if(err){
+//         errorHandling(res, err, 500)
+//     }else{
+//         // console.log("event.id:",event.id)
+//         // console.log("goalsId:", event.goalsId)
+        
+//         event.goalsId.forEach(g => {
+//             // console.log('current event.goalsId instance',g)
+//             Goal.findByIdAndUpdate(
+//                 g,
+//                 {$push: {eventsId: event.id} },
+//                 )
+//             // console.log('new event.goalsId:',g.eventsId)
+//           })
+
+//         // console.log(event)
+//     }
+//     res.send(event)
 // Read all events
 const getEvents = function(req, res){
     getUserEvents(req).exec((err, events) =>{
