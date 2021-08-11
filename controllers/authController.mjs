@@ -1,9 +1,6 @@
 import User from '../models/user.mjs'
 import bcrypt from 'bcrypt'
 import jsonwebtoken from 'jsonwebtoken'
-import yenv from 'yenv'
-
-const env = yenv('env.yaml', { env: 'jwt' })
 
 const errorHandling = function(res, err, code) {
     res.status(code)

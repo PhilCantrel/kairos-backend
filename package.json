@@ -25,8 +25,7 @@
     "mongoose-autopopulate": "^0.14.0",
     "normalize-mongoose": "^0.0.1",
     "superagent": "^6.1.0",
-    "supertest": "^6.1.4",
-    "yenv": "^3.0.0"
+    "supertest": "^6.1.4"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

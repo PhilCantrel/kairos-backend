@@ -4203,14 +4203,3 @@ yauzl@^2.10.0:
   dependencies:
     buffer-crc32 "~0.2.3"
     fd-slicer "~1.1.0"
-
-yenv@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/yenv/-/yenv-3.0.0.tgz#8fe7eadbccda6f4e4271bf12ba3169bbe207f16d"
-  integrity sha512-ghUzu49pchzamfLuJrplGlZc+N3dyPmFyv2B2W+ZzTvTuuwU3WJaR5P0zPNbixIuTr4Mo4iSPQ4R8P2eAhcSww==
-  dependencies:
-    coercer "^1.1.2"
-    deep-extend "^0.6.0"
-    js-yaml "^4.0.0"
-    keyblade "^0.3.2"
-    yargs "^16.2.0"

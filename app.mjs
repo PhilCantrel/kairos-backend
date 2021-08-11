@@ -2,9 +2,6 @@
 import express from 'express'
 import cors from 'cors'
 import jsonwebtoken from 'jsonwebtoken'
-import yenv from 'yenv'
-
-const env = yenv('env.yaml', { env: 'jwt' })
 
 // Imports the router
 import {router as appRouter} from './appRouter.mjs'
