@@ -45,7 +45,7 @@ const Goal = new Schema({
     lTGoalsId: [{
         type: Schema.Types.ObjectId,
         ref: "LifetimeGoal",
-        autopopulate: { select: 'type' },
+        autopopulate: { select: 'type description' },
         required: true
     }],
     eventsId: {
@@ -56,7 +56,7 @@ const Goal = new Schema({
 
 
 Goal.plugin(autopopulate, {
-    functions: ['find', 'findOne', 'findById']
+    functions: ['find', 'findOne', 'findById', 'findByIdAndUpdate']
 })
 // Removes _ from id and deletes v property from model
 Goal.plugin(normalize)
