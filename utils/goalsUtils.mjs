@@ -80,8 +80,10 @@ const deleteGoal = function (id) {
 // Updates the Goal by ID and returns it
 const updateGoal = function (req) {
     try {
+        console.log(req.params)
+        console.log('req.body:',req.body)
         req.body.editedAt = date
-        return Goal.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        return Goal.findByIdAndUpdate(req.body.id, req.body, {new: true})
     } catch (e) {
         console.log(`goalUtils => updateGoal Error: ${e.message}`)
     }
