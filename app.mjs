@@ -24,7 +24,7 @@ app.use(cors())
 // Verify JWT token 
 app.use((req,res,next) => {
     if (req.headers.authorization) {
-        jsonwebtoken.verify(req.headers.authorization.split(' ')[1], env.JWT_SECRET, (err, decoded) => {
+        jsonwebtoken.verify(req.headers.authorization.split(' ')[1], process.env.JWT_SECRET, (err, decoded) => {
             if (err) {
                 req.user = undefined
             } else {

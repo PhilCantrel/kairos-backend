@@ -25,7 +25,7 @@ const signUp = function (req, res) {
             }
             // return the email & jwt
             res.status(201)
-            return res.json({jwt: jsonwebtoken.sign({email: user.email, id: user.id}, env.JWT_SECRET, { expiresIn: env.JWT_EXPIRES_IN })})
+            return res.json({jwt: jsonwebtoken.sign({email: user.email, id: user.id}, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN })})
         })
     } else {
         res.status(400)
@@ -41,7 +41,7 @@ const signIn = function (req, res) {
             return res.json({message: "Authentication Failed: Invalid email or password"}) 
         }
         res.status(200)
-        return res.json({jwt: jsonwebtoken.sign({email: user.email, id: user.id}, env.JWT_SECRET, { expiresIn: env.JWT_EXPIRES_IN })})
+        return res.json({jwt: jsonwebtoken.sign({email: user.email, id: user.id}, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN })})
     })
 }
 
