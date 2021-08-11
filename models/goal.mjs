@@ -1,6 +1,8 @@
 // Imports mongoose and defines the mongoose Schema
 import mongoose from 'mongoose'
 import normalize from 'normalize-mongoose'
+import autopopulate from 'mongoose-autopopulate'
+
 const Schema = mongoose.Schema
 
 
@@ -53,6 +55,9 @@ const Goal = new Schema({
 })
 
 
+Goal.plugin(autopopulate, {
+    functions: ['find', 'findOne', 'findById']
+})
 // Removes _ from id and deletes v property from model
 Goal.plugin(normalize)
 
