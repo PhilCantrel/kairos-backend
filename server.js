@@ -6,7 +6,7 @@ import mongoose from 'mongoose'
 const port = process.env.PORT || 4000
 
 // Defines Local Mongoose DB location
-const dbConn = 'mongodb://localhost/kairos_db'
+const dbConn = process.env.MONGO_URI || 'mongodb://localhost/kairos_db'
 
 // Express service listener
 app.listen(port, ()=>{console.log(`Kairos server running on port ${port}`)})
