@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 
 
 // Defines port number
-const port = 4000
+const port = process.env.PORT || 4000
 
 // Defines Local Mongoose DB location
 const dbConn = 'mongodb://localhost/kairos_db'
