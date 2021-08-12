@@ -48,10 +48,11 @@ const Goal = new Schema({
         autopopulate: { select: 'type description' },
         required: true
     }],
-    eventsId: {
-        type: Array,
-        required: false
-    }
+    eventsId: [{
+        type: Schema.Types.ObjectId,
+        ref: "Event",
+        autopopulate: true
+    }]
 })
 
 
