@@ -14,8 +14,22 @@ const errorHandling = function(res, err, code) {
 const newEvent = function (req, res){
     addUserEvent(req).save()
         .then(newEvent => {
+
+            //loop through the attached goals for newEvent and the event Id
+            // each goal's eventsId field.
+            if(newEvent.length > 0){
+                console.log(newEvent.goalsId)
+                newEvent.goalsId.forEach( goalId =>{
+                    Goal.findByIdAndUpdate(goalId._id,
+                        {$push: {eventsId: nE._id}},
+                        {safe: true, upsert: true},
+                        function(err) { if(err){ console.log(err) } })
+                })
+            }
             Event.populate(newEvent,{path:'goalsId', select:{title:1}})
-            .then(nE => res.send(nE))
+            .then(nE => {
+                res.send(nE)
+            })
         })
         .catch(err => errorHandling(res, err, 500))
 }
