@@ -17,11 +17,12 @@ const newEvent = function (req, res){
 
             //loop through the attached goals for newEvent and the event Id
             // each goal's eventsId field.
-            if(newEvent.length > 0){
-                console.log(newEvent.goalsId)
+            if(newEvent.goalsId.length > 0){
+                console.log('The new event:', newEvent._id)
                 newEvent.goalsId.forEach( goalId =>{
+                    console.log(newEvent._id)
                     Goal.findByIdAndUpdate(goalId._id,
-                        {$push: {eventsId: nE._id}},
+                        {$push: {eventsId: newEvent._id}},
                         {safe: true, upsert: true},
                         function(err) { if(err){ console.log(err) } })
                 })
