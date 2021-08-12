@@ -8,7 +8,8 @@ const Schema = mongoose.Schema
 const LifetimeGoal = new Schema({
     type: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     description: {
         type: String,
