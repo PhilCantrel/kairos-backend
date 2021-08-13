@@ -59,11 +59,11 @@ Preview Screenshots:
 
 ## User Testing
 
-User testing was conducted on five candidates remotely. Thier responses were recorded using a google form which can be found [here]([kairos user testing](https://docs.google.com/forms/d/e/1FAIpQLSfdz41ror3jnrLcCsk7N3SLMq1SvP-jGm_vHCdAIVBYGaIdug/viewform?usp=send_form)).
+User testing was conducted on four candidates remotely (on production site), and one on development site. Thier responses were recorded using a google form which can be found [here]([kairos user testing](https://docs.google.com/forms/d/e/1FAIpQLSfdz41ror3jnrLcCsk7N3SLMq1SvP-jGm_vHCdAIVBYGaIdug/viewform?usp=send_form)).
 
-<u>Summary</u> - Most users didn't encounter bugs that prevented the app from operating. The most common feedback was in regards to post Life Goal creation. The general consensus was that it's confusing and feels like the Life Goals the users create at sign up don't get saved.
+**<u>Summary</u>** - Most users didn't encounter bugs that prevented the app from operating. The most common feedback was in regards to post Life Goal creation. The general consensus was that it's confusing and feels like the Life Goals the users create at sign up don't get saved.
 
-<u>Bugs Reported</u>
+**<u>Bugs Reported</u>**
 
 Users can create multiple Life Time goals in the same category.
 
