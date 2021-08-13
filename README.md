@@ -53,9 +53,9 @@ React Calendar
 
 Preview Screenshots:
 
-<img title="" src="file:///Users/phil/Documents/projects/submission/docs/Trello%20Screenshot.png" alt="Trello Screenshot.png" width="684">
+<img title="" src=docs/Trello%20Screenshot.png" alt="Trello Screenshot.png" width="684">
 
-![Trello Screenshot 2.png](/Users/phil/Documents/projects/submission/docs/Trello%20Screenshot%202.png)
+![Trello Screenshot 2.png](docs/Trello%20Screenshot%202.png)
 
 ## User Testing
 
@@ -95,7 +95,7 @@ In response to the user feedback receieved kairos will be updated to include the
 
 ### Full user testing data
 
-![2021-08-13_21.16.13_docs.google.com_9d2c7f269be1.png](/Users/phil/Documents/projects/submission/docs/2021-08-13_21.16.13_docs.google.com_9d2c7f269be1.png)
+![2021-08-13_21.16.13_docs.google.com_9d2c7f269be1.png](docs/2021-08-13_21.16.13_docs.google.com_9d2c7f269be1.png)
 
 # Part 1 Docs -
 
