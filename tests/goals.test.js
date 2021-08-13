@@ -2,6 +2,7 @@
 
 import request from 'supertest'
 import {app} from '../app.mjs'
+import { makeRequest } from './test-utils/test-utils'
 
 import {dbConnect, dbDisconnect, dbDrop} from './mmsdb.mjs'
 
@@ -33,28 +34,23 @@ beforeEach((done)=>{
 describe("Test the goals path", () => {
 
     // defines the test goals data
-    const sampleEndDate = 1639994800000
+
     const sampleCompletedAt = 1649544800000
-    const sampleLtGoalsId = ["61025508432c4c28734a321c"]
-    const sampleEventsId = ["61050487cc48c02c70fe466b", "610504ac3b889a2c83beceb1"]
+    const sampleEventStart = 1649744800000
+    const sampleEventEnd = 1649944800000
+    const sampleTimeFrame = "1 week"
 
     const sampleRequiredGoal = {
         "title": "My New Goal",
         "description": "Test description",
-        "timeframe": ".2 ms",
-        "endDate": sampleEndDate,
-
+        "timeframe": sampleTimeFrame
     }
 
     const sampleOptionalGoal = {
         "title": "My New Goal",
         "description": "Test description",
-        "timeframe": ".2 ms",
-        "endDate": sampleEndDate,
-        "completedAt": sampleCompletedAt,
-        "lTGoalsId": sampleLtGoalsId,
-        "eventsId": sampleEventsId
-
+        "timeframe": sampleTimeFrame,
+        "completedAt": sampleCompletedAt
     }
 
     // Start of goal test cases
@@ -84,8 +80,8 @@ describe("Test the goals path", () => {
                 try {
                     expect(res.body.title).toBe("My New Goal")
                     expect(res.body.description).toBe("Test description")
-                    expect(res.body.timeframe).toBe(".2 ms")
-                    expect(new Date(res.body.endDate)).toStrictEqual(new Date(sampleEndDate))
+                    expect(res.body.timeframe).toBe(sampleTimeFrame)
+                    expect(res.body.endDate).toBeDefined()
                     done()
                 } catch (e) {
                     done(e)
@@ -112,21 +108,47 @@ describe("Test the goals path", () => {
     })
 
     test("Should be able to POST optional and required field and have them returned", done => {
-        request(app)    
-            .post('/goals')
-            .set('Authorization', 'bearer ' + loggedInToken)
-            .send(sampleOptionalGoal)
-            .expect(200)
-            .then((res) => {
-                try {
-                    expect(new Date(res.body.completedAt)).toStrictEqual(new Date(sampleCompletedAt))
-                    expect(res.body.lTGoalsId).toStrictEqual(sampleLtGoalsId)
-                    expect(res.body.eventsId).toStrictEqual(sampleEventsId)
-                    done()
-                } catch (e) {
-                    done(e)
-                }
-            })
+        makeRequest('post', '/ltgoals', loggedInToken, {
+            "type": "My New Goal",
+            "description": "Test description"
+        }, 200)
+        .then(res => {
+            try {
+                let ltgid = res.body.id
+                makeRequest('post', '/goals', loggedInToken, {
+                    "title": "My New Goal",
+                    "description": "Test description",
+                    "timeframe": sampleTimeFrame,
+                    "completedAt": sampleCompletedAt,
+                    "lTGoalsId": ltgid
+                }, 200)
+                .then((res) => {
+                        expect(new Date(res.body.completedAt)).toStrictEqual(new Date(sampleCompletedAt))
+                        expect(res.body.lTGoalsId[0].id).toStrictEqual(ltgid)
+                        makeRequest('post', '/events', loggedInToken, {
+                            "title": "My new Event",
+                            "description": "Test description",
+                            "eventStart": sampleEventStart,
+                            "eventEnd": sampleEventEnd
+                        }, 200).then((res) => {
+                            let eid = res.body.id
+                            makeRequest('post', '/goals', loggedInToken, {
+                                "title": "My New Goal",
+                                "description": "Test description",
+                                "timeframe": sampleTimeFrame,
+                                "completedAt": sampleCompletedAt,
+                                "eventsId": eid
+                            }, 200).then((res) => {
+                                expect(res.body.eventsId[0]).toStrictEqual(eid)
+                            })
+                        })
+                        done()
+                    
+                })
+        } catch (e) {
+            done(e)
+        }
+        })     
     })
 
     test("Should be able to GET request /goals/:id, receive 200 status & json data", done => {
@@ -222,26 +244,19 @@ describe("Test the goals path", () => {
     })
 
     test("PUT request to goals/:id should update existing goal", done => {
-        request(app)    
-            .post('/goals')
-            .set('Authorization', 'bearer ' + loggedInToken)
-            .send(sampleRequiredGoal)
-            .expect(200)
+        makeRequest('post', '/goals', loggedInToken, {
+            "title": "My New Goal",
+            "description": "Test description",
+            "timeframe": sampleTimeFrame
+        }, 200)
             .then((res) => {
                 try {
-                    request(app)
-                        .put(`/goals/${res.body.id}`)
-                        .set('Authorization', 'bearer ' + loggedInToken)
-                        .send({title: "The Title Should Now Be Updated"})
-                        .expect(200)
-                        .then((res) => {
-                            try {
-                                expect(res.body.title).toBe("The Title Should Now Be Updated")
-                                expect(res.body.description).toBe("Test description")
-                                done()
-                            } catch (e) {
-                                done(e)
-                            }
+                    makeRequest('put', '/goals/id', loggedInToken,
+                    {"title": "The Title Should Now Be Updated", "id": res.body.id}, 200).then((res) => {
+                            expect(res.body.title).toBe("The Title Should Now Be Updated")
+                            expect(res.body.description).toBe("Test description")
+                            done()
+
                         })
                 } catch (e) {
                     done(e)

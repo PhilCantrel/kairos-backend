@@ -118,7 +118,7 @@ describe("Sign in testing", () => {
                 email: 'test@test.com',
                 password: 'test123'
             })
-            .then((res) => {
+            .then(() => {
                 try {
                     request(app)
                         .post('/sign_in')
